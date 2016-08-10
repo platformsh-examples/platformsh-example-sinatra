@@ -1,0 +1,21 @@
+name: myrubyapp
+type: "ruby:2.3"
+
+web:
+    commands:
+       start: "unicorn -l $SOCKET -E production config.ru"
+
+    locations:
+        "/":
+            root: "public"
+            passthru: true
+
+disk: 2048
+
+hooks:
+  build: |
+    gem install bundler
+    bundle install
+
+mounts:
+   "/public": "shared:files/files"
